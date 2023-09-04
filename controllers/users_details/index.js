@@ -22,26 +22,32 @@ router.post('/userdetails/', auth, (req, res) => {
 });
 
 router.get('/userdetails/', auth, (req, res) => {
-    const userId = req.user.userId;
-    if (userId !== null) {
+    const { userId } = req.user;
+    console.log(userId, '*********');
+    if (userId) {
         modelUserDetails.findOne({
             where: {
                 userId: userId
             }
         })
             .then((data) => {
-                res.status(200).json({
-                    photo: data.photo,
-                    city_local: data.city_local,
-                    city_trip: data.city_trip,
-                    when: data.when
-                })
+                if (data) {
+                    res.status(200).json({
+                        photo: data.photo,
+                        city_local: data.city_local,
+                        city_trip: data.city_trip,
+                        when: data.when
+                    })
+                } else {
+                    res.status(204).json({ error: 'User do not exist' })
+                }
+
             })
             .catch((error) => { res.status(400).json(error) })
 
     }
     else {
-        res.status(300).json('No Auth');
+        res.status(401).json('No Auth');
     }
 });
 
