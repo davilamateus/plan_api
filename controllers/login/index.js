@@ -1,10 +1,11 @@
 const express = require('express');
 const router = express.Router();
 const modelUser = require('../../models/users');
+const modelUserDetails = require('./../../models/users_details');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const JWTsecret = require('../../Middleware/JWTsecret');
-const CreateConfirmEmail = require('../confirmEmail/functions/createConfirmEmail');
+const JWTsecret = require('../../middleware/JWTsecret');
+const useCreateConfirmEmail = require('../../hooks/confirmEmail/useCreateConfirmEmail');
 
 
 router.post('/login/', (req, res) => {
@@ -20,14 +21,27 @@ router.post('/login/', (req, res) => {
                 if (correct) {
                     const token = jwt.sign({ name: data.name, email: data.email, type: data.type, userId: data.id, time: new Date() }, JWTsecret, { expiresIn: '500h' });
                     if (data.status == 1) {
-                        res.status(200).json({ message: 'Password correct', token: token });
+                        modelUserDetails.findOne({
+                            where: {
+                                userId: data.id
+                            }
+                        }).then((result) => {
+                            if (result) {
+                                res.status(200).json({ message: 'Password correct', token: token });
+                            } else {
+                                res.status(201).json({ message: 'There are no user details', token: token });
+
+                            }
+                        })
                     } else if (data.status == 2) {
                         res.status(203).json({ error: 'User blocked' });
                     } else if (data.status == 0) {
-                        CreateConfirmEmail(data.id);
+                        useCreateConfirmEmail(data.id, email);
                         res.status(203).json({ error: 'User not confirm' });
                     }
-                } else { res.status(202).json({ message: 'Password incorrect' }); }
+                } else {
+                    res.status(202).json({ message: 'Password incorrect' });
+                }
             }
             else {
                 res.status(404).json({ error: 'Not exist' });

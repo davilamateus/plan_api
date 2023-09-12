@@ -2,8 +2,8 @@ const express = require('express');
 const router = express.Router();
 const modelUser = require('./../../models/users');
 const bcrypt = require('bcryptjs');
-const auth = require('./../../Middleware/userMiddleware');
-const CreateConfirmEmail = require('../confirmEmail/functions/createConfirmEmail');
+const auth = require('./../../middleware/userMiddleware');
+const UserCreateConfirmEmail = require('../../hooks/confirmEmail/useCreateConfirmEmail');
 
 
 router.post('/user/', (req, res) => {
@@ -24,7 +24,7 @@ router.post('/user/', (req, res) => {
                 })
                     .then((data) => {
                         res.status(200).json({ sucess: "Add" });
-                        CreateConfirmEmail(data.id);
+                        UserCreateConfirmEmail(data.id, email);
                     })
                     .catch((error) => { res.status(400).json(error) })
             }

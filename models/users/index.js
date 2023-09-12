@@ -2,7 +2,7 @@ const Sequelize = require('sequelize');
 const connection = require('../../database/db');
 const userDetails = require('./index');
 
-const user = connection.define('users', {
+const user = connection.define('user', {
 
     name: {
         type: Sequelize.STRING,
