@@ -26,76 +26,129 @@ router.post('/finances/goals', auth, (req, res) => {
 
 router.get('/finances/goals', auth, (req, res) => {
     const userId = req.user.userId;
-    if (userId !== null) {
-        financesGoals.findAll({
-            where: {
-                [Op.or]: [
-                    {
-                        userId: userId,
-                    }, {
-                        userId: 0
-                    },
-                ]
-            },
-            include: [{ model: financesExpense }],
+    const { fromDate, toDate, type } = req.query;
+    if (fromDate && toDate && type && userId) {
 
-        })
-            .then((data) => {
-                res.status(200).json(data.map((item) => {
-                    return {
-                        type: item.type,
-                        title: item.title,
-                        color: item.color,
-                        icon: item.icon,
-                        value: item.value,
-                        id: item.id,
-                        itens: item.financesExpenses
-                    }
-                }))
+        console.log(fromDate, toDate)
+        if (userId !== null) {
+
+            let result = [];
+
+            financesExpense.findAll({
+                where: {
+                    [Op.and]: [
+
+                        { userId: userId },
+                        { type: type },
+                        { financesGoalId: null },
+                        {
+                            date: {
+                                [Op.between]: [fromDate, toDate]
+                            }
+                        },
+                    ]
+                }
             })
-            .catch((error) => { res.status(400).json(error) })
+                .then((others) => {
+                    let calc = 0
 
+                    others.map((item) => {
+                        calc = calc + item.value
+                    })
+                    result.push({
+                        title: 'Others',
+                        color: '#000',
+                        icon: 0,
+                        value: 0,
+                        valueItens: calc,
+                        id: 0,
+                        itens: others
+                    })
+
+                })
+            financesGoals.findAll({
+                where: {
+                    [Op.or]: [
+                        {
+                            userId: userId,
+                        },
+                        { type: type }
+                    ]
+                },
+                include: [{
+                    model: financesExpense,
+                }],
+
+            })
+                .then((goals) => {
+
+                    goals.map((goal) => {
+
+                        let calc = 0;
+
+                        goal.financesExpenses.map((expense) => {
+                            if (expense.date >= fromDate && expense.date <= toDate) {
+                                calc = calc + expense.value
+                            }
+                        })
+
+                        result.push({
+                            type: goal.type,
+                            title: goal.title,
+                            color: goal.color,
+                            icon: goal.icon,
+                            value: goal.value,
+                            valueItens: calc,
+                            id: goal.id,
+                            itens: goal.financesExpenses.map((expense) => {
+                                if (expense.date >= fromDate && expense.date <= toDate) {
+                                    return expense
+                                } else {
+                                    return []
+                                }
+                            })
+                        })
+
+                    })
+
+
+                })
+                .then(() => {
+                    res.status(200).json(result);
+
+                })
+                .catch((error) => { res.status(400).json(error) })
+
+        }
     }
     else {
-        res.status(300).json('No Auth');
+        res.status(300).json('Fault Informations.');
     }
 });
 
 router.patch('/finances/goals', auth, (req, res) => {
-    const { type, title, icon, color } = req.body;
-    if (type && title && icon && color) {
-        financesGoals.findOne({
-            where: {
-                id: id,
-                [Op.and]: [
-                    {
-                        userId: req.user.userId
-                    }
-                ]
-            },
-        }).then((data) => {
-            if (data) {
-                financesGoals.update({
-                    title, icon, color,
-                },
-                    {
-                        where: {
-                            id: id,
-                        }
-                    })
-                    .then(() => { res.status(200).json({ sucess: "Updated" }) })
-                    .catch((error) => { res.status(400).json(error) })
-            } else {
-                res.status(400).json('error')
-            }
-        })
+    const { title, icon, color, id, value } = req.body;
+    console.log(title, icon, color, id, value);
+    if (title && icon && color && id && value) {
+        financesGoals.update({
+            title, icon, color, value
+        },
+            {
+                where: {
+                    id: id,
+                }
+            })
+            .then(() => { res.status(200).json({ sucess: "Updated" }) })
+            .catch((error) => { res.status(400).json(error) })
+
     } else {
         res.status(400).json({ error: 'Fault Informations' })
     }
 });
 
+
 router.delete('/finances/goals', auth, (req, res) => {
-    const { id } = req.body;
+    const { id } = req.query;
     if (id) {
         financesGoals.findOne({
             where: {

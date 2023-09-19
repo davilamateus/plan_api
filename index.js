@@ -10,8 +10,9 @@ const modelConfirmEmail = require('./models/confirmEmail');
 const modelChangePassword = require('./models/forgetPassword');
 const modelUser = require('./models/users');
 const modelUserDetails = require('./models/users_details');
-const modelGoals = require('./models/finances/goals');
+const modelFinancesGoals = require('./models/finances/goals');
 const modelFinancesExpense = require('./models/finances/expense');
+const modelFinancesEntraces = require('./models/finances/entraces');
 
 app.use(cors());
 app.use((req, res, next) => {
@@ -27,8 +28,9 @@ app.use((req, res, next) => {
 // Import Controllers
 const controllerUser = require('./controllers/users');
 const controllerUserDetails = require('./controllers/users_details');
-const controllerFinancesCategories = require('./controllers/finances/goals');
-const controllerFinancesExpense = require('./controllers/finances/expense');
+const controllerFinancesGoals = require('./controllers/finances/goals');
+const controllerFinancesExpense = require('./controllers/finances/expenses');
+const controllerFinancesEntraces = require('./controllers/finances/entraces');
 const controllerLogin = require('./controllers/login');
 const controllerConfirmEmail = require('./controllers/confirmEmail');
 const controllerForgetPassword = require('./controllers/forgetPassword');
@@ -38,8 +40,9 @@ app.use(bodyPaser.urlencoded({ extended: false }));
 
 app.use('/', controllerUser);
 app.use('/', controllerUserDetails);
-app.use('/', controllerFinancesCategories);
+app.use('/', controllerFinancesGoals);
 app.use('/', controllerFinancesExpense);
+app.use('/', controllerFinancesEntraces);
 app.use('/', controllerLogin);
 app.use('/', controllerConfirmEmail);
 app.use('/', controllerForgetPassword);
