@@ -57,7 +57,7 @@ router.get('/finances/goals', auth, (req, res) => {
                     })
                     result.push({
                         title: 'Others',
-                        color: '#000',
+                        color: '#BCBCBC',
                         icon: 0,
                         value: 0,
                         valueItens: calc,
@@ -68,7 +68,7 @@ router.get('/finances/goals', auth, (req, res) => {
                 })
             financesGoals.findAll({
                 where: {
-                    [Op.or]: [
+                    [Op.and]: [
                         {
                             userId: userId,
                         },
@@ -87,7 +87,11 @@ router.get('/finances/goals', auth, (req, res) => {
                         let calc = 0;
 
                         goal.financesExpenses.map((expense) => {
-                            if (expense.date >= fromDate && expense.date <= toDate) {
+                            if (type == 1) {
+                                if (expense.date >= fromDate && expense.date <= toDate) {
+                                    calc = calc + expense.value
+                                }
+                            } else {
                                 calc = calc + expense.value
                             }
                         })
@@ -101,10 +105,13 @@ router.get('/finances/goals', auth, (req, res) => {
                             valueItens: calc,
                             id: goal.id,
                             itens: goal.financesExpenses.map((expense) => {
-                                if (expense.date >= fromDate && expense.date <= toDate) {
-                                    return expense
+                                if (type == 1) {
+
+                                    if (expense.date >= fromDate && expense.date <= toDate) {
+                                        return expense
+                                    }
                                 } else {
-                                    return []
+                                    return expense
                                 }
                             })
                         })

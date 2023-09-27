@@ -33,7 +33,7 @@ const userDetails = connection.define('userDetail', {
         allowNull: false
     },
     when: {
-        type: Sequelize.TEXT,
+        type: Sequelize.BIGINT,
         allowNull: false
     },
     userId: {

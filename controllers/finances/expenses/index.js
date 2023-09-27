@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const financesExpense = require('../../../models/finances/expense');
+const financesEntraces = require('../../../models/finances/entraces');
 const auth = require('../../../Middleware/userMiddleware');
 const Sequelize = require('sequelize');
 const Op = Sequelize.Op;
@@ -55,6 +56,50 @@ router.get('/finances/expense', auth, (req, res) => {
     }
 });
 
+router.get('/finances/cashinhand', auth, (req, res) => {
+    const userId = req.user.userId;
+
+    if (userId !== null) {
+        let totalExpense = 0;
+        let totalEntrace = 0;
+        financesExpense.findAll({
+            where: {
+                [Op.and]: [
+                    { userId: userId },
+                ]
+            },
+        })
+            .then((expenses) => {
+                if (expenses.length > 0) {
+                    expenses.map((expense) => {
+                        totalExpense = totalExpense + expense.value;
+                    });
+                }
+
+                financesEntraces.findAll({
+                    where: {
+                        [Op.and]: [
+                            { userId: userId },
+                        ]
+                    },
+                }).then((entraces) => {
+                    if (entraces.length > 0) {
+                        entraces.map((entrace) => {
+                            totalEntrace = totalEntrace + entrace.value;
+                        })
+                    }
+                    res.status(200).json(totalEntrace - totalExpense)
+                })
+
+            })
+
+            .catch((error) => { res.status(400).json(error) });
+
+    }
+    else {
+        res.status(300).json('No Auth');
+    }
+});
 
 
 router.patch('/finances/expense/', auth, (req, res) => {
