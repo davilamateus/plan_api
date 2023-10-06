@@ -10,7 +10,7 @@ const financesEntraces = connection.define('financesEntraces', {
         allowNull: false
     },
     value: {
-        type: Sequelize.BIGINT,
+        type: Sequelize.DECIMAL(10, 2),
         allowNull: false
     },
     date: {

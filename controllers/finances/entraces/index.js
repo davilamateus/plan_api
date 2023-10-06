@@ -44,6 +44,7 @@ router.get('/finances/entraces', auth, (req, res) => {
         })
             .then((data) => {
                 res.status(200).json(data)
+                console.log(data)
 
             })
             .catch((error) => { res.status(400).json(error) });

@@ -13,7 +13,7 @@ const financesGoals = connection.define('financesGoals', {
         allowNull: false
     },
     value: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.DECIMAL,
         allowNull: false
     },
     icon: {
