@@ -14,16 +14,22 @@ const modelFinancesGoals = require('./models/finances/goals');
 const modelFinancesExpense = require('./models/finances/expense');
 const modelFinancesEntraces = require('./models/finances/entraces');
 
-app.use(cors());
-app.use(cors({ origin: '*' }));
 
-app.use((req, res, next) => {
-    res.header('Access-Control-Allow-Headers, *, Access-Control-Allow-Origin', 'Origin, X-Requested-with, Content_Type,Accept,Authorization', 'http://localhost:4200');
-    if (req.method === 'OPTIONS') {
-        res.header('Access-Control-Allow-Methods', 'PUT,POST,PATCH,DELETE,GET');
-        return res.status(200).json({});
-    }
-    next();
+
+const corsOptions = {
+    origin: 'http://localhost:3001',
+    credentials: true,            //access-control-allow-credentials:true
+    optionSuccessStatus: 200
+}
+app.use(cors(corsOptions));
+app.use(cors())
+
+app.use("/", (req, res) => {
+    res.setHeader("Access-Control-Allow-Origin", "*")
+    res.setHeader("Access-Control-Allow-Credentials", "true");
+    res.setHeader("Access-Control-Max-Age", "1800");
+    res.setHeader("Access-Control-Allow-Headers", "content-type");
+    res.setHeader("Access-Control-Allow-Methods", "PUT, POST, GET, DELETE, PATCH, OPTIONS");
 });
 
 
