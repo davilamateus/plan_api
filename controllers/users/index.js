@@ -1,9 +1,9 @@
 const express = require('express');
 const router = express.Router();
-const auth = require('./../../middleware/userMiddleware');
 const modelUser = require('./../../models/users');
 const bcrypt = require('bcryptjs');
 const UserCreateConfirmEmail = require('../../hooks/confirmEmail/useCreateConfirmEmail');
+const auth = require('../../middleware/userMiddleware')
 
 
 router.post('/user/', (req, res) => {
