@@ -95,7 +95,16 @@ router.get('/finances/goals', auth, (req, res) => {
                                 calc = calc + expense.value
                             }
                         })
-
+                        let financesItens = []
+                        goal.financesExpenses.map((expense) => {
+                            if (type == 1) {
+                                if (expense.date >= fromDate && expense.date <= toDate) {
+                                    financesItens.push(expense);
+                                }
+                            } else {
+                                financesItens.push(expense);
+                            }
+                        })
                         result.push({
                             type: goal.type,
                             title: goal.title,
@@ -104,16 +113,7 @@ router.get('/finances/goals', auth, (req, res) => {
                             value: goal.value,
                             valueItens: calc,
                             id: goal.id,
-                            itens: goal.financesExpenses.map((expense) => {
-                                if (type == 1) {
-
-                                    if (expense.date >= fromDate && expense.date <= toDate) {
-                                        return expense
-                                    }
-                                } else {
-                                    return expense
-                                }
-                            })
+                            itens: financesItens
                         })
 
                     })
