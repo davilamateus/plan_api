@@ -3,7 +3,7 @@ const router = express.Router();
 const modelUser = require('./../../models/users');
 const bcrypt = require('bcryptjs');
 const UserCreateConfirmEmail = require('../../hooks/confirmEmail/useCreateConfirmEmail');
-const auth = require('../../Middleware/userMiddleware')
+const auth = require('../../middleware/userMiddleware')
 
 
 router.post('/user/', (req, res) => {
