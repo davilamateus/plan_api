@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const JWTsecret = require('./JWTsecret');
+const JWTsecret = require('./..JWTsecret');
 
 
 
