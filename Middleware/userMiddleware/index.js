@@ -1,11 +1,11 @@
 const jwt = require('jsonwebtoken');
 const JWTsecret = require('./JWTsecret');
-const Users = require('../Models/Users/Auth/Users');
 
 
 
-function auth(req, res, next) {
+function auth(req, res) {
     const authToken = req.headers['authorization'];
+    console.log('teste')
 
     if (authToken !== undefined) {
 
