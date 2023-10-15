@@ -20,5 +20,8 @@
     "nodemailer": "^6.9.4",
     "sequelize": "^6.32.1",
     "uuid": "^9.0.0"
+  },
+  "engines": {
+    "node": ">=16.14"
   }
 }
