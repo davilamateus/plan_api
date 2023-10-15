@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const financesExpense = require('../../../models/finances/expense');
 const financesEntraces = require('../../../models/finances/entraces');
-const auth = require('../../../Middleware/userMiddleware');
+const auth = require('../../../middleware/userMiddleware');
 const Sequelize = require('sequelize');
 const Op = Sequelize.Op;
 

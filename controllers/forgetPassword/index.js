@@ -4,7 +4,6 @@ const changePasswordlModel = require('../../models/forgetPassword');
 const userModel = require('../../models/users');
 const uuid = require('uuid');
 const bcrypt = require('bcryptjs');
-const auth = require('./../../Middleware/userMiddleware');
 const UseSendEmail = require('./../../hooks/emails/useSendEmail');
 
 
