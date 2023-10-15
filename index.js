@@ -15,6 +15,8 @@ const modelFinancesExpense = require('./models/finances/expense');
 const modelFinancesEntraces = require('./models/finances/entraces');
 
 app.use(cors());
+app.use(cors({ origin: '*' }));
+
 app.use((req, res, next) => {
     res.header('Access-Control-Allow-Headers, *, Access-Control-Allow-Origin', 'Origin, X-Requested-with, Content_Type,Accept,Authorization', 'http://localhost:4200');
     if (req.method === 'OPTIONS') {
