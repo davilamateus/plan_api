@@ -32,6 +32,10 @@ const userDetails = connection.define('userDetail', {
         type: Sequelize.TEXT,
         allowNull: false
     },
+    country_code: {
+        type: Sequelize.TEXT,
+        allowNull: false
+    },
     when: {
         type: Sequelize.BIGINT,
         allowNull: false
