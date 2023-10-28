@@ -13,6 +13,10 @@ const modelUserDetails = require('./models/users_details');
 const modelFinancesGoals = require('./models/finances/goals');
 const modelFinancesExpense = require('./models/finances/expense');
 const modelFinancesEntraces = require('./models/finances/entraces');
+const modelToDoListMain = require('./models/toDoList/main');
+const modelToDoListTasks = require('./models/toDoList/tasks');
+const modelToDoListAttchaments = require('./models/toDoList/attchaments');
+const modelToDoListComments = require('./models/toDoList/comments');
 
 
 
@@ -38,6 +42,10 @@ const controllerConfirmEmail = require('./controllers/confirmEmail');
 const controllerForgetPassword = require('./controllers/forgetPassword');
 const controllerCities = require('./controllers/cities');
 const controllerNoticies = require('./controllers/noticies');
+const controllerToDolistMain = require('./controllers/toDoList/main');
+const controllerToDolistTasks = require('./controllers/toDoList/tasks');
+const controllerToDolistComments = require('./controllers/toDoList/comments');
+const controllerToDolistAttchaments = require('./controllers/toDoList/attchaments');
 
 app.use(bodyPaser.json());
 app.use(bodyPaser.urlencoded({ extended: false }));
@@ -52,6 +60,10 @@ app.use('/', controllerConfirmEmail);
 app.use('/', controllerForgetPassword);
 app.use('/', controllerCities);
 app.use('/', controllerNoticies);
+app.use('/', controllerToDolistMain);
+app.use('/', controllerToDolistTasks);
+app.use('/', controllerToDolistComments);
+app.use('/', controllerToDolistAttchaments);
 
 app.use('/', express.static('./public'));
 app.use('/', express.static('./uploads'));

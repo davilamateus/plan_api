@@ -2,7 +2,6 @@ const express = require('express');
 const router = express.Router();
 const modelUser = require('../../models/users');
 const modelUserDetails = require('./../../models/users_details');
-const bcrypt = require('bcryptjs');
 const auth = require('../../middleware/userMiddleware');
 const multer = require('multer');
 const crypto = require('crypto');
@@ -102,9 +101,8 @@ router.patch('/userdetails/', auth, (req, res) => {
     }
 });
 
-// Configuração do Multer para o upload de arquivos
 const storage = multer.diskStorage({
-    destination: path.resolve('uploads/imagens/user'), // Pasta onde os arquivos serão armazenados
+    destination: path.resolve('uploads/imagens/user'),
     filename: (req, file, cb) => {
         crypto.randomBytes(16, (err, buf) => {
             if (err) return cb(err);
@@ -128,9 +126,7 @@ const upload = multer({
     },
 });
 
-// Rota para o upload de um arquivo
 router.post('/user/photo', upload.single('file'), (req, res) => {
-    console.log('teste', req.file)
     if (!req.file) {
         return res.status(400).json({ error: 'Nenhum arquivo foi enviado.' });
     }
