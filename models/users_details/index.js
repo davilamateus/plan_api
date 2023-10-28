@@ -20,6 +20,10 @@ const userDetails = connection.define('userDetail', {
         type: Sequelize.TEXT,
         allowNull: false
     },
+    currency_local: {
+        type: Sequelize.TEXT,
+        allowNull: false
+    },
     city_trip: {
         type: Sequelize.TEXT,
         allowNull: false
@@ -29,6 +33,10 @@ const userDetails = connection.define('userDetail', {
         allowNull: true
     },
     country_trip: {
+        type: Sequelize.TEXT,
+        allowNull: false
+    },
+    currency_trip: {
         type: Sequelize.TEXT,
         allowNull: false
     },

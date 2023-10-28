@@ -36,6 +36,8 @@ const controllerFinancesEntraces = require('./controllers/finances/entraces');
 const controllerLogin = require('./controllers/login');
 const controllerConfirmEmail = require('./controllers/confirmEmail');
 const controllerForgetPassword = require('./controllers/forgetPassword');
+const controllerCities = require('./controllers/cities');
+const controllerNoticies = require('./controllers/noticies');
 
 app.use(bodyPaser.json());
 app.use(bodyPaser.urlencoded({ extended: false }));
@@ -48,6 +50,8 @@ app.use('/', controllerFinancesEntraces);
 app.use('/', controllerLogin);
 app.use('/', controllerConfirmEmail);
 app.use('/', controllerForgetPassword);
+app.use('/', controllerCities);
+app.use('/', controllerNoticies);
 
 app.use('/', express.static('./public'));
 app.use('/', express.static('./uploads'));
