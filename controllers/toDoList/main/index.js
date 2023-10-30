@@ -10,11 +10,10 @@ const Op = Sequelize.Op;
 
 
 router.post('/todolist', auth, (req, res) => {
-    const { title, description, date, status, icon, color, position } = req.body;
-    console.log(title, description, date, status, icon, color, position)
-    if (description && title && status && icon && date && color && position) {
+    const { title, description, date, color } = req.body;
+    if (description && title && date && color) {
         toDoListModel.create({
-            title, description, date, status, icon, color, position, userId: req.user.userId
+            title, description, date, status: 1, color, position: 0, userId: req.user.userId
         })
             .then(() => { res.status(200).json({ sucess: "Add" }) })
             .catch((error) => { res.status(400).json(error) });
@@ -34,7 +33,7 @@ router.get('/todolist', auth, (req, res) => {
             where: {
                 userId: userId
             },
-            order: [['position', 'DESC'], ['createdAt', 'DESC']],
+            order: [['position', 'ASC'], ['createdAt', 'DESC']],
             include: [
                 { model: toDoListTasks, },
                 { model: toDoListComments, },
@@ -57,10 +56,10 @@ router.get('/todolist', auth, (req, res) => {
 
 
 router.patch('/todolist', auth, (req, res) => {
-    const { title, description, date, status, icon, color, position, id } = req.body;
-    if (description && title && status && icon && date && color && position && id) {
+    const { title, description, date, status, color, position, id } = req.body;
+    if (description && title && status && date && color && position && id) {
         toDoListModel.update({
-            title, description, date, status, icon, color, position,
+            title, description, date, status, color, position,
         },
             {
                 where: {
@@ -78,6 +77,33 @@ router.patch('/todolist', auth, (req, res) => {
     else {
         res.status(400).json({ error: 'Fault Informations' });
     }
+});
+
+router.patch('/todolist/position', auth, (req, res) => {
+    const { todolistList } = req.body;
+    if (todolistList) {
+        if (todolistList.length > 0) {
+            todolistList.map((todolist) => {
+                console.log(todolist.status)
+                toDoListModel.update({
+                    status: todolist.status,
+                    position: todolist.position
+                },
+                    {
+                        where: {
+                            [Op.and]: [
+
+                                { userId: req.user.userId },
+                                { id: todolist.id },
+
+                            ]
+                        }
+                    })
+            })
+        }
+        res.status(200).json('Updade')
+    }
+
 });
 
 

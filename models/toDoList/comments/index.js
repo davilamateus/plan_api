@@ -13,10 +13,7 @@ const toDoListComments = connection.define('toDoListComments', {
         type: Sequelize.TEXT,
         allowNull: false
     },
-    date: {
-        type: Sequelize.TEXT,
-        allowNull: false
-    },
+
     userId: {
         type: Sequelize.INTEGER,
         allowNull: false

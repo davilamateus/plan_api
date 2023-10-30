@@ -5,7 +5,6 @@ const JWTsecret = require('../JWTsecret');
 
 function auth(req, res, next) {
     const authToken = req.headers['authorization'];
-    console.log('teste')
 
     if (authToken !== undefined) {
 

@@ -25,10 +25,6 @@ const toDoList = connection.define('toDoList', {
         type: Sequelize.INTEGER,
         allowNull: false
     },
-    icon: {
-        type: Sequelize.INTEGER,
-        allowNull: false
-    },
     color: {
         type: Sequelize.STRING,
         allowNull: false

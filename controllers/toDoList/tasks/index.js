@@ -7,10 +7,11 @@ const Op = Sequelize.Op;
 
 
 router.post('/todolist/task', auth, (req, res) => {
-    const { title, description, status, toDoListId } = req.body;
-    if (description && title && status && toDoListId) {
+    const { title, description, toDoListId } = req.body;
+
+    if (description && title && toDoListId) {
         toDoListTask.create({
-            title, description, status, toDoListId, userId: req.user.userId
+            title, description, toDoListId, status: false, userId: req.user.userId
         })
             .then(() => { res.status(200).json({ sucess: "Add" }) })
             .catch((error) => { res.status(400).json(error) });
@@ -23,13 +24,11 @@ router.post('/todolist/task', auth, (req, res) => {
 
 
 
-
-
-router.patch('/todolist/talk', auth, (req, res) => {
-    const { title, description, status, id } = req.body;
-    if (description && title && status && id) {
+router.patch('/todolist/task', auth, (req, res) => {
+    const { id, status, } = req.body;
+    if (id && status !== undefined) {
         toDoListTask.update({
-            title, description, status,
+            status
         },
             {
                 where: {
@@ -54,7 +53,8 @@ router.patch('/todolist/talk', auth, (req, res) => {
 router.delete('/todolist/task', auth, (req, res) => {
     const { id } = req.query;
     if (id) {
-        toDoListTask.findOne({
+        console.log('******', id)
+        toDoListTask.destroy({
             where: {
                 [Op.and]: [
 

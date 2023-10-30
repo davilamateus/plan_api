@@ -66,7 +66,7 @@ router.post('/todolist/attchament/upload', upload.single('file'), auth, (req, re
 router.delete('/todolist/attchament', auth, (req, res) => {
     const { id } = req.query;
     if (id) {
-        toDoListAttchaments.findOne({
+        toDoListAttchaments.destroy({
             where: {
                 [Op.and]: [
 
