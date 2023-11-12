@@ -44,6 +44,14 @@ const userDetails = connection.define('userDetail', {
         type: Sequelize.TEXT,
         allowNull: false
     },
+    country_lat: {
+        type: Sequelize.TEXT,
+        allowNull: false
+    },
+    country_lon: {
+        type: Sequelize.TEXT,
+        allowNull: false
+    },
     when: {
         type: Sequelize.BIGINT,
         allowNull: false

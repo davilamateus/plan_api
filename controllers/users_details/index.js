@@ -9,10 +9,10 @@ const path = require('path');
 
 
 router.post('/userdetails/', auth, (req, res) => {
-    const { photo, city_local, state_local, country_local, currency_local, city_trip, state_trip, country_trip, currency_trip, when, country_code } = req.body;
-    if (city_local && country_local && city_trip && country_trip && when && country_code && currency_local && currency_trip) {
+    const { photo, city_local, state_local, country_local, currency_local, city_trip, state_trip, country_trip, currency_trip, when, country_code, country_lat, country_lon } = req.body;
+    if (city_local && country_local && city_trip && country_trip && when && country_code && currency_local && currency_trip && country_lon && country_lat) {
         modelUserDetails.create({
-            photo, when, city_local, state_local, country_local, currency_local, city_trip, state_trip, country_trip, currency_trip, country_code, userId: req.user.userId
+            photo, when, city_local, state_local, country_local, currency_local, city_trip, state_trip, country_trip, currency_trip, country_code, country_lon, country_lat, userId: req.user.userId
         })
             .then(() => {
                 res.status(200).json({ sucess: "Add" })
@@ -56,6 +56,8 @@ router.get('/userdetails/', auth, (req, res) => {
                             country_trip: data.country_trip,
                             currency_trip: data.currency_trip,
                             country_code: data.country_code,
+                            country_lon: data.country_lon,
+                            country_lat: data.country_lat,
                             when: data.when
                         })
 
@@ -74,8 +76,8 @@ router.get('/userdetails/', auth, (req, res) => {
 });
 
 router.patch('/userdetails/', auth, (req, res) => {
-    const { photo, city_local, state_local, country_local, currency_local, city_trip, state_trip, country_trip, currency_trip, country_code, when } = req.body;
-    if (city_local && country_local && city_trip && country_trip && when && country_code && currency_local && currency_trip) {
+    const { photo, city_local, state_local, country_local, currency_local, city_trip, state_trip, country_trip, currency_trip, country_code, country_lon, country_lat, when } = req.body;
+    if (city_local && country_local && city_trip && country_trip && when && country_code && currency_local && currency_trip && country_lat && country_lat) {
         modelUserDetails.findOne({
             where: {
                 userId: req.user.userId
@@ -83,7 +85,7 @@ router.patch('/userdetails/', auth, (req, res) => {
         }).then((data) => {
             if (data) {
                 modelUserDetails.update({
-                    photo, when, city_local, state_local, country_local, currency_local, city_trip, state_trip, country_trip, currency_trip, country_code,
+                    photo, when, city_local, state_local, country_local, currency_local, city_trip, state_trip, country_trip, currency_trip, country_code, country_lat, country_lon
                 },
                     {
                         where: {
