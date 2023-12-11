@@ -67,6 +67,39 @@ router.get('/cities/advices/img', auth, async (req, res) => {
 
 });
 
+router.get('/city/weather/', auth, async (req, res) => {
+    const { country_slug, city } = req.query;
+
+    async function requestApi(key) {
+        console.log('keuyyyy', key)
+        let key1 = '82dc6076ac2dc00fcd49a3b1d3f698fc';
+        let key2 = '9e5266ada2921a65f9c3d982510cecaf';
+        let api = `https://api.openweathermap.org/data/2.5/weather?q=${city},${country_slug}&appid=${key}`
+        fetch(api)
+            .then(response => response.json())
+            .then(result => {
+                console.log(result)
+                console.log()
+                if (result.cod == 429) {
+                    requestApi('9e5266ada2921a65f9c3d982510cecaf');
+                } else {
+                    res.json(result).status(200)
+
+                }
+            }
+            )
+            .catch(() => {
+                setTimeout(() => {
+                    requestApi()
+                }, 5000);
+            })
+
+    }
+    requestApi('82dc6076ac2dc00fcd49a3b1d3f698fc');
+
+
+});
+
 
 
 module.exports = router

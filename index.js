@@ -49,6 +49,7 @@ const controllerToDolistAttchaments = require('./controllers/toDoList/attchament
 
 app.use(bodyPaser.json());
 app.use(bodyPaser.urlencoded({ extended: false }));
+app.use('/', express.static('uploads'));
 
 app.use('/', controllerUser);
 app.use('/', controllerUserDetails);
