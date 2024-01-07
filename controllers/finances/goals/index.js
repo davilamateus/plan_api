@@ -10,7 +10,6 @@ const Op = Sequelize.Op;
 
 router.post('/finances/goals', auth, (req, res) => {
     const { type, title, icon, color, value } = req.body;
-    console.log(type, title, icon, color, value, req.user.userId)
     if (type && title && icon && color && value) {
         financesGoals.create({
             type, title, icon, color, value, userId: req.user.userId
@@ -28,8 +27,6 @@ router.get('/finances/goals', auth, (req, res) => {
     const userId = req.user.userId;
     const { fromDate, toDate, type } = req.query;
     if (fromDate && toDate && type && userId) {
-
-        console.log(fromDate, toDate)
         if (userId !== null) {
 
             let result = [];
@@ -135,7 +132,6 @@ router.get('/finances/goals', auth, (req, res) => {
 
 router.patch('/finances/goals', auth, (req, res) => {
     const { title, icon, color, id, value } = req.body;
-    console.log(title, icon, color, id, value);
     if (title && icon && color && id && value) {
         financesGoals.update({
             title, icon, color, value

@@ -23,7 +23,6 @@ router.get('/cities/autocomplete', (req, res) => {
 
 router.get('/cities/advices', auth, async (req, res) => {
     const { local, category } = req.query;
-    console.log(category)
 
     const options = {
         url: `https://api.foursquare.com/v3/places/search?ll=${local}${category !== undefined ? `&categories=` + category : ''}`,

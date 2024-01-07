@@ -12,8 +12,6 @@ router.post('/forgetpassword/', (req, res) => {
 
     const { email } = req.body;
 
-
-
     if (email) {
         userModel.findOne({
             where: {

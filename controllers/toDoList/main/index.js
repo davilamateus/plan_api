@@ -107,37 +107,5 @@ router.patch('/todolist/position', auth, (req, res) => {
 });
 
 
-/*
-router.delete('/todolist/', auth, (req, res) => {
-    const { id } = req.query;
-    if (id) {
-        toDoListModel.findOne({
-            where: {
-                [Op.and]: [
-
-                    { userId: req.user.userId },
-                    { id: id },
-
-                ]
-            },
-        }).then((data) => {
-            if (data) {
-                financesExpense.destroy({
-                    where: {
-                        id: id,
-                    }
-                })
-                    .then(() => { res.status(200).json({ sucess: "Delete" }) })
-                    .catch((error) => { res.status(400).json(error) })
-            } else {
-                res.status(400).json('error');
-            }
-        })
-    } else {
-        res.status(400).json({ error: 'Fault Informations' })
-    }
-});
-
-*/
 
 module.exports = router

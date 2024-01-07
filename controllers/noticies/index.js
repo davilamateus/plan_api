@@ -6,8 +6,6 @@ const axios = require('axios');
 router.get('/noticies/articles', (req, res) => {
     const { country, category, page } = req.query;
 
-    console.log('Chamada')
-
     const apiKey = 'pub_31510e3fa57fdd9eaf76f8c8aad5b943efa97';
     //const apiKey = 'pub_31474e760b76a911c5b146e6ecab83971a987';
     //const apiKey = 'pub_31475c610f7a1d0b209777747359f076c796c';
