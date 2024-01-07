@@ -78,8 +78,7 @@ router.get('/city/weather/', auth, async (req, res) => {
         fetch(api)
             .then(response => response.json())
             .then(result => {
-                console.log(result)
-                console.log()
+
                 if (result.cod == 429) {
                     requestApi('9e5266ada2921a65f9c3d982510cecaf');
                 } else {

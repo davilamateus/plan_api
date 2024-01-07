@@ -77,15 +77,15 @@ router.get('/userdetails/', auth, (req, res) => {
 
 router.patch('/userdetails/', auth, (req, res) => {
     const { photo, city_local, state_local, country_local, currency_local, city_trip, state_trip, country_trip, currency_trip, country_code, country_lon, country_lat, when } = req.body;
-    if (city_local && country_local && city_trip && country_trip && when && country_code && currency_local && currency_trip && country_lat && country_lat) {
-        modelUserDetails.findOne({
-            where: {
-                userId: req.user.userId
-            }
-        }).then((data) => {
-            if (data) {
+    modelUserDetails.findOne({
+        where: {
+            userId: req.user.userId
+        }
+    }).then((data) => {
+        if (data) {
+            if (photo, city_local, state_local, country_local, currency_local, city_trip, state_trip, country_trip, currency_trip, country_code, country_lon, country_lat, when) {
                 modelUserDetails.update({
-                    photo, when, city_local, state_local, country_local, currency_local, city_trip, state_trip, country_trip, currency_trip, country_code, country_lat, country_lon
+                    photo, city_local, state_local, country_local, currency_local, city_trip, state_trip, country_trip, currency_trip, country_code, country_lon, country_lat, when
                 },
                     {
                         where: {
@@ -94,13 +94,16 @@ router.patch('/userdetails/', auth, (req, res) => {
                     })
                     .then(() => { res.status(200).json({ sucess: "Updated" }) })
                     .catch((error) => { res.status(400).json(error) })
-            } else {
-                res.status(400).json('error')
             }
-        })
-    } else {
-        res.status(400).json({ error: 'Fault Informations' })
-    }
+
+
+            else {
+                res.status(400).json('Falt Informations')
+            }
+        } else {
+            res.status(400).json('error')
+        }
+    })
 });
 
 const storage = multer.diskStorage({

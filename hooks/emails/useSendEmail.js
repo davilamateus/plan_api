@@ -6,12 +6,12 @@ async function UseSendEmail(email, subject, html) {
         host: "smtp.hostinger.com",
         port: 465,
         auth: {
-            user: "no-reply@planejadordeintercambio.com.br",
+            user: "no-reply@themytriphub.com",
             pass: "Goias123.",
         },
     });
     let info = await transporter.sendMail({
-        from: "no-reply@planejadordeintercambio.com.br",
+        from: "no-reply@themytriphub.com",
         to: email,
         subject: subject,
         text: "Here's a text version of the email.",
