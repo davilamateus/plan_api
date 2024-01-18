@@ -1,4 +1,5 @@
 const nodemailer = require("nodemailer");
+const dotenv = require('dotenv').config();
 
 async function UseSendEmail(email, subject, html) {
 
@@ -7,7 +8,7 @@ async function UseSendEmail(email, subject, html) {
         port: 465,
         auth: {
             user: "no-reply@themytriphub.com",
-            pass: "Goias123.",
+            pass: process.env.email,
         },
     });
     let info = await transporter.sendMail({

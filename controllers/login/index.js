@@ -4,10 +4,9 @@ const modelUser = require('../../models/users');
 const modelUserDetails = require('./../../models/users_details');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const JWTsecret = require('../../middleware/JWTsecret');
 const useCreateConfirmEmail = require('../../hooks/confirmEmail/useCreateConfirmEmail');
-
-
+require('dotenv').config();
+const JWTsecret = process.env.JWTsecret
 router.post('/login/', (req, res) => {
     const { email, password } = req.body;
     if (email && password) {

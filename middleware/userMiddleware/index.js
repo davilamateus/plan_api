@@ -1,15 +1,15 @@
 const jwt = require('jsonwebtoken');
-const JWTsecret = require('../JWTsecret');
+require('dotenv').config();
 
 
 
 function auth(req, res, next) {
     const authToken = req.headers['authorization'];
-
+    const JWTscret = process.env.JWTscret;
     if (authToken !== undefined) {
 
         const token = authToken.split(' ')[1];
-        jwt.verify(token, JWTsecret, (error, data) => {
+        jwt.verify(token, JWTscret, (error, data) => {
             if (error) {
                 res.json({ error: 'INVALID TOKEN' });
             } else {

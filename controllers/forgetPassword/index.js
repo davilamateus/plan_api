@@ -20,7 +20,7 @@ router.post('/forgetpassword/', (req, res) => {
         }).then((data) => {
             if (data) {
                 var token = uuid.v4();
-                const subject = 'Plan - Get a new password. ';
+                const subject = 'The My Trip Hub - Get a new password. ';
                 const html = `
 <table cellpadding="0" cellspacing="0" style="width:100%">
 	<tbody>
@@ -32,7 +32,7 @@ router.post('/forgetpassword/', (req, res) => {
 						<td style="text-align:center">
 						<p>&nbsp;</p>
 
-						<p><img alt="Logo da PLAN" src="https://planejadordeintercambio.com.br/img/person.png" style="width:150px" /></p>
+						<p><img alt="Logo da PLAN" src="https://themytriphub.com/img/person.png" style="width:150px" /></p>
 
 						<h1><span style="font-family:Arial,Helvetica,sans-serif"><strong>Getting a new Password</strong></span></h1>
 
@@ -41,14 +41,14 @@ router.post('/forgetpassword/', (req, res) => {
 						<p>You requested an email to generate a new password.</p>
 
 						<p>To get started, please &nbsp;by clicking the button below:</p>
-						<span style="font-size:16px"><span style="font-family:Arial,Helvetica,sans-serif"><strong><a href="http://localhost:3001/forgetpassword/${token}" style="display: inline-block; background-color: #6AD9A8; color: #000; text-decoration: none; padding: 10px 20px; border-radius: 5px; margin-top: 20px; width:60%;">New Password</a></strong></span></span>
+						<span style="font-size:16px"><span style="font-family:Arial,Helvetica,sans-serif"><strong><a href="https://themytriphub.com/forgetpassword/${token}" style="display: inline-block; background-color: #6AD9A8; color: #000; text-decoration: none; padding: 10px 20px; border-radius: 5px; margin-top: 20px; width:60%;">New Password</a></strong></span></span>
 
-						<p>If you have any questions or need assistance, feel free to contact our support team at contact@plantraveplanner.com.</p>
+						<p>If you have any questions or need assistance, feel free to contact our support team at contact@themytriphub.com</p>
 
-						<p>Thank you again for choosing PLAN Platform!</p>
+						<p>Thank you again for choosing The My Trip Hub!</p>
 
 						<p>Best regards,<br />
-						Your PLAN Team</p>
+						Your The My Trip Hub Team</p>
 
 						<p>&nbsp;</p>
 						</td>
