@@ -6,7 +6,11 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const useCreateConfirmEmail = require('../../hooks/confirmEmail/useCreateConfirmEmail');
 require('dotenv').config();
-const JWTsecret = process.env.JWTsecret
+
+
+
+const JWTsecret = process.env.JWTscret
+
 router.post('/login/', (req, res) => {
     const { email, password } = req.body;
     if (email && password) {
