@@ -9,9 +9,9 @@ require('dotenv').config();
 
 
 
-const JWTsecret = process.env.JWTscret
 
 router.post('/login/', (req, res) => {
+    const JWTsecret = process.env.JWTscret
     const { email, password } = req.body;
     if (email && password) {
         modelUser.findOne({
