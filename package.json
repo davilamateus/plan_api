@@ -22,6 +22,7 @@
     "mysql2": "^3.5.2",
     "nodemailer": "^6.9.4",
     "openai": "^4.15.0",
+    "radio-browser-api": "^6.0.1",
     "sequelize": "^6.32.1",
     "uuid": "^9.0.0"
   },
