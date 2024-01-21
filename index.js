@@ -76,7 +76,10 @@ connection
         console.log(error);
     });
 
+setInterval(() => {
+    console.log('Keep Working', new Date().getTime());
 
+}, 60000);
 
 app.listen(process.env.PORT || 3000, () => {
     console.log('Server Running');
