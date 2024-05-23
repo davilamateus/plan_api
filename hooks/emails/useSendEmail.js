@@ -1,7 +1,7 @@
 const nodemailer = require("nodemailer");
 const dotenv = require('dotenv').config();
 
-async function UseSendEmail(email, subject, html) {
+const useSendEmail = async (email, subject, html) => {
 
     const transporter = nodemailer.createTransport({
         host: "smtp.hostinger.com",
@@ -25,5 +25,5 @@ async function UseSendEmail(email, subject, html) {
 
 }
 
-module.exports = UseSendEmail;
+module.exports = { useSendEmail };
 

@@ -5,13 +5,14 @@ require('dotenv').config();
 
 function auth(req, res, next) {
     const authToken = req.headers['authorization'];
+    console.log(authToken)
     const JWTscret = process.env.JWTscret;
     if (authToken !== undefined) {
 
         const token = authToken.split(' ')[1];
         jwt.verify(token, JWTscret, (error, data) => {
             if (error) {
-                res.json({ error: 'INVALID TOKEN' });
+                res.status(404).json({ error: 'INVALID TOKEN' });
             } else {
                 req.user = data;
                 next();
@@ -19,7 +20,7 @@ function auth(req, res, next) {
         })
 
     } else {
-        res.json({ error: ' THERE NO TOKEN' });
+        res.status(401).json({ error: ' THERE NO TOKEN' });
     }
 }
 

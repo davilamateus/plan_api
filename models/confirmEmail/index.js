@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
 const connection = require('../../database/db');
 
-const ConfirmEmail = connection.define('confirmEmail', {
+const confirmEmail = connection.define('confirmEmail', {
 
     token: {
         type: Sequelize.STRING,
@@ -21,4 +21,4 @@ const ConfirmEmail = connection.define('confirmEmail', {
 //ConfirmEmail.sync({ force: true });
 
 
-module.exports = ConfirmEmail;
+module.exports = confirmEmail;

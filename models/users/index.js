@@ -12,6 +12,10 @@ const user = connection.define('user', {
         type: Sequelize.STRING,
         allowNull: false
     },
+    photo: {
+        type: Sequelize.STRING,
+        allowNull: true
+    },
     status: {
         type: Sequelize.INTEGER,
         allowNull: false

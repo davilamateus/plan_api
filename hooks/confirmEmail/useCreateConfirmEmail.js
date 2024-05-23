@@ -1,8 +1,8 @@
 const confirmEmailModel = require('../../models/confirmEmail');
 const uuid = require('uuid');
-const UseSendEmail = require('./../emails/useSendEmail');
+const { useSendEmail } = require('./../emails/useSendEmail');
 
-function UseCreateConfirmEmail(userId, email) {
+const useCreateConfirmEmail = (userId, email) => {
 	var token = uuid.v4();
 
 	const subject = 'The My Trip Hub - Confirm your email.';
@@ -46,7 +46,7 @@ function UseCreateConfirmEmail(userId, email) {
 </table>
 `
 
-	UseSendEmail(email, subject, html);
+	useSendEmail(email, subject, html);
 	return (
 		confirmEmailModel.create({
 			userId, token, valid: true
@@ -54,4 +54,4 @@ function UseCreateConfirmEmail(userId, email) {
 	);
 
 }
-module.exports = UseCreateConfirmEmail;
+module.exports = { useCreateConfirmEmail };

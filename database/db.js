@@ -7,5 +7,6 @@ const connection = new Sequelize('u225794026_lab', 'u225794026_lab', 'Goias123.'
 
 });
 
-
 module.exports = connection;
+
+

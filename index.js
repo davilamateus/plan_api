@@ -5,20 +5,6 @@ const bodyPaser = require('body-parser');
 const cors = require('cors')
 
 
-// Imports Models
-const modelConfirmEmail = require('./models/confirmEmail');
-const modelChangePassword = require('./models/forgetPassword');
-const modelUser = require('./models/users');
-const modelUserDetails = require('./models/users_details');
-const modelFinancesGoals = require('./models/finances/goals');
-const modelFinancesExpense = require('./models/finances/expense');
-const modelFinancesEntraces = require('./models/finances/entraces');
-const modelToDoListMain = require('./models/toDoList/main');
-const modelToDoListTasks = require('./models/toDoList/tasks');
-const modelToDoListAttchaments = require('./models/toDoList/attchaments');
-const modelToDoListComments = require('./models/toDoList/comments');
-
-
 
 app.use(cors());
 
@@ -30,41 +16,38 @@ app.use((req, res, next) => {
 });
 
 // Import Controllers
-const controllerUser = require('./controllers/users');
-const controllerUserDetails = require('./controllers/users_details');
-const controllerFinancesGoals = require('./controllers/finances/goals');
-const controllerFinancesExpense = require('./controllers/finances/expenses');
-const controllerFinancesEntraces = require('./controllers/finances/entraces');
-const controllerLogin = require('./controllers/login');
-const controllerConfirmEmail = require('./controllers/confirmEmail');
-const controllerForgetPassword = require('./controllers/forgetPassword');
-const controllerCities = require('./controllers/cities');
-const controllerRadio = require('./controllers/radio');
-const controllerNoticies = require('./controllers/noticies');
-const controllerToDolistMain = require('./controllers/toDoList/main');
-const controllerToDolistTasks = require('./controllers/toDoList/tasks');
-const controllerToDolistComments = require('./controllers/toDoList/comments');
-const controllerToDolistAttchaments = require('./controllers/toDoList/attchaments');
+const routerUser = require('./routers/users');
+const controllerTrip = require('./routers/trip');
+const routerFinancesGoals = require('./routers/finances/goals');
+const routerFinancesExpense = require('./routers/finances/expenses');
+const routerFinancesResume = require('./routers/finances/resume');
+const routerFinancesEntraces = require('./routers/finances/entraces');
+const routerLogin = require('./routers/login');
+const routerCities = require('./routers/cities');
+const routerToDolistMain = require('./routers/toDoList/main');
+const routerToDolistTasks = require('./routers/toDoList/tasks');
+const routerToDolistComments = require('./routers/toDoList/comments');
+const routerToDolistAttchaments = require('./routers/toDoList/attchaments');
+
 
 app.use(bodyPaser.json());
 app.use(bodyPaser.urlencoded({ extended: false }));
+
 app.use('/', express.static('uploads'));
 
-app.use('/', controllerUser);
-app.use('/', controllerUserDetails);
-app.use('/', controllerFinancesGoals);
-app.use('/', controllerFinancesExpense);
-app.use('/', controllerFinancesEntraces);
-app.use('/', controllerLogin);
-app.use('/', controllerConfirmEmail);
-app.use('/', controllerForgetPassword);
-app.use('/', controllerCities);
-app.use('/', controllerRadio);
-app.use('/', controllerNoticies);
-app.use('/', controllerToDolistMain);
-app.use('/', controllerToDolistTasks);
-app.use('/', controllerToDolistComments);
-app.use('/', controllerToDolistAttchaments);
+
+app.use('/', routerUser);
+app.use('/', controllerTrip);
+app.use('/', routerFinancesGoals);
+app.use('/', routerFinancesExpense);
+app.use('/', routerFinancesEntraces);
+app.use('/', routerFinancesResume);
+app.use('/', routerLogin);
+app.use('/', routerCities);
+app.use('/', routerToDolistMain);
+app.use('/', routerToDolistTasks);
+app.use('/', routerToDolistComments);
+app.use('/', routerToDolistAttchaments);
 
 app.use('/', express.static('./public'));
 app.use('/', express.static('./uploads'));
@@ -78,10 +61,6 @@ connection
         console.log(error);
     });
 
-setInterval(() => {
-    console.log('Keep Working', new Date().getTime());
-
-}, 60000);
 
 app.listen(process.env.PORT || 3000, () => {
     console.log('Server Running');
