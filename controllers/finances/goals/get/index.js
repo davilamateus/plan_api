@@ -4,14 +4,17 @@ const modelFinanceExpenses = require("../../../../models/finances/expense");
 const Sequelize = require("sequelize");
 const Op = Sequelize.Op;
 
-const getFinanceGoals = (req, res) => {
+const getFinanceGoals = async (req, res) => {
     const { userId } = req.user;
     const { type } = req.query;
 
-    if (type) {
+    if (!type) {
+        return res.status(400).json({ error: "Missing required parameter" });
+    }
+    try {
         let result = [];
         // getting expenses without goals
-        modelFinanceExpenses
+        const otherExpenses = modelFinanceExpenses
             .findAll({
                 where: {
                     [Op.and]: [{ userId }, { type }, { financesGoalId: null }]
@@ -24,7 +27,7 @@ const getFinanceGoals = (req, res) => {
 
         // getting goals
 
-        modelFinanceGoals
+        const goals = modelFinanceGoals
             .findAll({
                 where: { [Op.and]: [{ userId }, { type }] },
                 include: [
@@ -39,16 +42,14 @@ const getFinanceGoals = (req, res) => {
                         const goalTotal = goal.financesExpenses.reduce((acc, expense) => acc + expense.value, 0);
                         result.push({ title: goal.title, color: goal.color, icon: goal.icon, value: goal.value, valueItens: goalTotal, id: goal.id, itens: goal.financesExpenses });
                     }
-                    res.status(200).json(result);
-                } else {
-                    res.status(200).json(result);
                 }
-            })
-            .catch((error) => {
-                res.status(400).json(error);
             });
-    } else {
-        res.status(400).json({ result: "Fault Informations" });
+        await Promise.all([otherExpenses, goals]);
+
+        // Send the result
+        res.status(200).json(result);
+    } catch {
+        res.status(500).json({ error: "Internal server error, try again later." });
     }
 };
 

@@ -10,5 +10,4 @@ module.exports = function getTimestampInfomartions(timestamp) {
         firstDay: firstDayTimestamp,
         lastDay: lastDayTimestamp
     };
-}
-
+};

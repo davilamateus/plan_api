@@ -1,32 +1,35 @@
-
-const userModel = require('../../../models/users');
-const modelChangePassword = require('../../../models/forgetPassword');
-const uuid = require('uuid');
+const userModel = require("../../../models/users");
+const modelChangePassword = require("../../../models/forgetPassword");
+const uuid = require("uuid");
 const { isEmail } = require("../../../functions/isEmail");
-const { useSendEmail } = require('./../../../hooks/emails/useSendEmail');
+const { useSendEmail } = require("./../../../hooks/emails/useSendEmail");
 
 const forgetPassword = (req, res) => {
     const { email } = req.body;
 
-    if (isEmail(email)) {
-        userModel.findOne({
-            where: {
-                email
-            }
-        })
+    if (!isEmail(email)) {
+        return res.status(400).json({ error: "Missing required parameter" });
+    }
+    try {
+        userModel
+            .findOne({
+                where: {
+                    email
+                }
+            })
             .then((data) => {
                 if (data) {
                     var token = uuid.v4();
 
-                    modelChangePassword.create({
-                        userId: data.id,
-                        token,
-                        valid: true
-                    })
+                    modelChangePassword
+                        .create({
+                            userId: data.id,
+                            token,
+                            valid: true
+                        })
                         .then(() => {
-                            const subject = 'The My Trip Hub - Get a new password. ';
-                            const html =
-                                (`
+                            const subject = "The My Trip Hub - Get a new password. ";
+                            const html = `
 <table cellpadding="0" cellspacing="0" style="width:100%">
 	<tbody>
 		<tr>
@@ -65,30 +68,24 @@ const forgetPassword = (req, res) => {
 	</tbody>
 </table>
 
-`)
+`;
 
                             useSendEmail(email, subject, html);
-                            res.status(200)
-                            res.json({ result: 'Add' })
+                            res.status(200);
+                            res.json({ result: "Add" });
                         })
                         .catch(() => {
-                            res.status(400)
-                            res.json({ result: 'Error' })
+                            res.status(400);
+                            res.json({ result: "Error" });
                         });
                 } else {
-                    res.status(404)
-                    res.json({ result: 'Error' })
+                    res.status(404);
+                    res.json({ result: "Error" });
                 }
-            })
-            .catch(() => {
-                res.status(404)
-                res.json({ result: 'Error' })
             });
-
-    } else {
-        res.status(404)
-        res.json({ result: 'Fault Informations' })
+    } catch {
+        res.status(500).json({ error: "Internal server error, try again later." });
     }
-}
+};
 
 module.exports = { forgetPassword };

@@ -3,7 +3,10 @@ const modelTrip = require("../../../models/trip");
 const addTrip = (req, res) => {
     const { currentCity, currentState, currentCountry, currentCountrySlug, currentCurrency, tripCity, tripState, tripCountry, tripCountrySlug, tripCurrency, tripLon, tripLat, when } = req.body;
     const { userId } = req.user;
-    if (currentCity && currentCountry && currentCountrySlug && currentCurrency && tripCity && tripCountry && tripCountrySlug && tripCurrency && tripLon && tripLat && when) {
+    if (!currentCity || !currentCountry || !currentCountrySlug || !currentCurrency || !tripCity || !tripCountry || !tripCountrySlug || !tripCurrency || !tripLon || !tripLat || !when) {
+        return res.status(400).json({ error: "Missing required parameter" });
+    }
+    try {
         modelTrip
             .findOne({
                 where: {
@@ -33,18 +36,12 @@ const addTrip = (req, res) => {
                             userId
                         })
                         .then(() => {
-                            res.status(200);
-                            res.json({ result: "Success" });
-                        })
-                        .catch((error) => {
-                            res.status(400);
-                            res.json({ result: error });
+                            res.status(200).json({ result: "Success" });
                         });
                 }
             });
-    } else {
-        res.status(400);
-        res.json({ result: "Falt Informations" });
+    } catch {
+        res.status(500).json({ error: "Internal server error, try again later." });
     }
 };
 

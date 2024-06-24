@@ -4,7 +4,10 @@ const addFinanceGoals = (req, res) => {
     const { type, title, icon, color, value } = req.body;
 
     const { userId } = req.user;
-    if (type && title && icon && color && value) {
+    if (!type || !title || !icon || !color || !value) {
+        return res.status(400).json({ error: "Missing required parameter" });
+    }
+    try {
         modelFinanceGoals
             .create({
                 type,
@@ -14,10 +17,9 @@ const addFinanceGoals = (req, res) => {
                 value,
                 userId
             })
-            .then(() => res.status(200).json({ result: "Add" }))
-            .catch((error) => res.status(400).json(error));
-    } else {
-        res.status(400).json({ result: "Fault Informations" });
+            .then(() => res.status(200).json({ result: "Add" }));
+    } catch {
+        res.status(500).json({ error: "Internal server error, try again later." });
     }
 };
 
