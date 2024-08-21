@@ -17,7 +17,7 @@ const addFinanceExpense = (req, res) => {
                 date,
                 userId
             })
-            .then(() => res.status(200).json({ result: "Add" }));
+            .then((data) => res.status(200).json(data));
     } catch {
         res.status(500).json({ error: "Internal server error, try again later." });
     }

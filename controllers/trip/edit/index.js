@@ -1,9 +1,51 @@
 const modelTrip = require("../../../models/trip");
 
 const editTrip = (req, res) => {
-    const { currentCity, currentState, currentCountry, currentCountrySlug, currentCurrency, tripCity, tripState, tripCountry, tripCountrySlug, tripCurrency, tripLon, tripLat, when } = req.body;
+    const {
+        currentCity,
+        currentState,
+        currentCountry,
+        currentCountrySlug,
+        currentCurrency,
+        tripCity,
+        tripState,
+        tripCountry,
+        tripCountrySlug,
+        tripCurrency,
+        tripLon,
+        tripLat,
+        when
+    } = req.body;
+
+    console.log(
+        currentCity,
+        currentState,
+        currentCountry,
+        currentCountrySlug,
+        currentCurrency,
+        tripCity,
+        tripState,
+        tripCountry,
+        tripCountrySlug,
+        tripCurrency,
+        tripLon,
+        tripLat,
+        when
+    );
     const { userId } = req.user;
-    if (!currentCity || !currentCountry || !currentCountrySlug || !currentCurrency || !tripCity || !tripCountry || !tripCountrySlug || !tripCurrency || !tripLon || !tripLat || !when) {
+    if (
+        !currentCity ||
+        !currentCountry ||
+        !currentCountrySlug ||
+        !currentCurrency ||
+        !tripCity ||
+        !tripCountry ||
+        !tripCountrySlug ||
+        !tripCurrency ||
+        !tripLon ||
+        !tripLat ||
+        !when
+    ) {
         return res.status(400).json({ error: "Missing required parameter" });
     }
     try {

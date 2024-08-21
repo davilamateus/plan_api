@@ -14,8 +14,8 @@ const addToDoListAttchaments = (req, res) => {
                 toDoListId,
                 userId
             })
-            .then(() => {
-                res.status(200).json({ result: "Add" });
+            .then((data) => {
+                res.status(200).json(data);
             })
             .catch((error) => {
                 res.status(400).json(error);

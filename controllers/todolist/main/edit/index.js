@@ -27,11 +27,43 @@ const editToDoList = (req, res) => {
                 }
             )
             .then(() => {
-                res.status(200).json({ sucess: "Updated" });
+                res.status(200).json({ success: "Updated" });
             });
-    } catch {
+    } catch (error) {
+        console.error("Error updating todo item:", error);
         res.status(500).json({ error: "Internal server error, try again later." });
     }
 };
 
-module.exports = { editToDoList };
+const editToDoListPosition = async (req, res) => {
+    const todolist = req.body;
+    const { userId } = req.user;
+
+    if (!todolist) {
+        return res.status(400).json({ error: "Missing required parameter" });
+    }
+
+    try {
+        const updatePromises = todolist.map((item) =>
+            modelToDoList.update(
+                {
+                    status: item.status,
+                    position: item.position
+                },
+                {
+                    where: {
+                        [Op.and]: [{ userId }, { id: item.id }]
+                    }
+                }
+            )
+        );
+
+        await Promise.all(updatePromises);
+        res.status(200).json({ success: "Updated" });
+    } catch (error) {
+        console.error("Error updating todo items:", error);
+        res.status(500).json({ error: "Internal server error, try again later." });
+    }
+};
+
+module.exports = { editToDoList, editToDoListPosition };

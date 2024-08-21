@@ -11,14 +11,27 @@ const getToDoList = (req, res) => {
                 where: {
                     userId
                 },
+                attributes: ["title", "description", "date", "status", "color", "position", "id"],
                 order: [
                     ["position", "ASC"],
                     ["createdAt", "DESC"]
                 ],
                 include: [
-                    { model: modelToDoListTasks, order: [["createdAt", "ASC"]] },
-                    { model: modelToDoListComments, order: [["createdAt", "ASC"]] },
-                    { model: modelToDoListAttchaments, order: [["createdAt", "ASC"]] }
+                    {
+                        model: modelToDoListTasks,
+                        order: [["createdAt", "ASC"]],
+                        attributes: ["title", "description", "status", "toDoListId", "id"]
+                    },
+                    {
+                        model: modelToDoListComments,
+                        attributes: ["title", "description", "date", "toDoListId", "id", "createdAt"],
+                        order: [["createdAt", "ASC"]]
+                    },
+                    {
+                        model: modelToDoListAttchaments,
+                        attributes: ["title", "link", "toDoListId", "id"],
+                        order: [["createdAt", "ASC"]]
+                    }
                 ]
             })
             .then((data) => {

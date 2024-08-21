@@ -18,8 +18,13 @@ const addToDoList = (req, res) => {
                 position: 0,
                 userId
             })
-            .then(() => {
-                res.status(200).json({ sucess: "Add" });
+            .then((data) => {
+                res.status(200).json({
+                    ...data.dataValues,
+                    toDoListAttchaments: [],
+                    toDoListComments: [],
+                    toDoListTasks: []
+                });
             });
     } catch {
         res.status(500).json({ error: "Internal server error, try again later." });

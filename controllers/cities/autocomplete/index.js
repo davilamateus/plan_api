@@ -8,7 +8,15 @@ const citiesAutocomplete = (req, res) => {
         return res.status(400).json({ error: "Missing required parameter" });
     }
     try {
-        const response = async () => await axios.get(`https://api.locationiq.com/v1/autocomplete?key=${apiKey}&q=${query}&format=json`).then((data) => res.status(200).json({ result: data.data }));
+        const response = async () =>
+            await axios
+                .get(`https://api.locationiq.com/v1/autocomplete?key=${apiKey}&q=${query}&format=json`)
+                .then((data) => {
+                    res.status(200).json(data.data);
+                })
+                .catch((error) => {
+                    res.status(500).json({ error: "Internal server error, try again later." });
+                });
 
         response();
     } catch {

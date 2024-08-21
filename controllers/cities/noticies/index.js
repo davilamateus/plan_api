@@ -15,7 +15,8 @@ const noticies = (req, res) => {
                 .get(`https://newsdata.io/api/1/news?apikey=${key}&country=${country}&image=1&${category !== undefined ? "category=" + category : ""}${page !== undefined ? "&page=" + page : ""}`)
                 .then((data) => res.status(200).json(data.data))
                 .catch((error) => {
-                    if (error.response.status === 429) {
+                    if (error.response.status && error.response.status === 429) {
+                        console.log(error);
                         response(key2);
                     }
                 });

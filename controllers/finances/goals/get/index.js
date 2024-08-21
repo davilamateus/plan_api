@@ -46,6 +46,8 @@ const getFinanceGoals = async (req, res) => {
             });
         await Promise.all([otherExpenses, goals]);
 
+        //fixes this
+
         // Send the result
         res.status(200).json(result);
     } catch {

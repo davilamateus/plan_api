@@ -1,5 +1,6 @@
 const modelUser = require("../../../models/users");
 const modelTrip = require("../../../models/trip");
+const firstToDoList = require("./../../../functions/firstsToDoList");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
@@ -47,6 +48,7 @@ const socialLogin = (req, res) => {
                             password: hash
                         })
                         .then((result) => {
+                            firstToDoList(result.id);
                             const token = jwt.sign({ name: result.name, email: result.email, type: 1, userId: result.id, time: new Date() }, JWTsecret, { expiresIn: "500h" });
                             res.status(201).json({ result: "There are no user details", token: token });
                         });

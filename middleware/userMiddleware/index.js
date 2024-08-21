@@ -11,7 +11,7 @@ function auth(req, res, next) {
         const token = authToken.split(" ")[1];
         jwt.verify(token, JWTscret, (error, data) => {
             if (error) {
-                res.status(404).json({ error: "INVALID TOKEN" });
+                res.status(404).json({ error: "INVALID TOKEN ", authToken });
             } else {
                 req.user = data;
                 next();

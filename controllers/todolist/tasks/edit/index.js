@@ -10,6 +10,7 @@ const editToDoListTask = (req, res) => {
         return res.status(400).json({ error: "Missing required parameter" });
     }
     try {
+        console.log(id, status);
         modelToDoListTasks
             .update(
                 {

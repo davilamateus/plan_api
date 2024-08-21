@@ -15,17 +15,11 @@ app.use((req, res, next) => {
 
 // Import Controllers
 const routerUser = require("./routers/users");
-const controllerTrip = require("./routers/trip");
-const routerFinancesGoals = require("./routers/finances/goals");
-const routerFinancesExpense = require("./routers/finances/expenses");
-const routerFinancesResume = require("./routers/finances/resume");
-const routerFinancesEntraces = require("./routers/finances/entraces");
+const routerTrip = require("./routers/trip");
+const routerFinances = require("./routers/finances");
 const routerLogin = require("./routers/login");
 const routerCities = require("./routers/cities");
-const routerToDolistMain = require("./routers/toDoList/main");
-const routerToDolistTasks = require("./routers/toDoList/tasks");
-const routerToDolistComments = require("./routers/toDoList/comments");
-const routerToDolistAttchaments = require("./routers/toDoList/attchaments");
+const routerToDolist = require("./routers/toDoList");
 
 app.use(bodyPaser.json());
 app.use(bodyPaser.urlencoded({ extended: false }));
@@ -33,17 +27,11 @@ app.use(bodyPaser.urlencoded({ extended: false }));
 app.use("/", express.static("uploads"));
 
 app.use("/", routerUser);
-app.use("/", controllerTrip);
-app.use("/", routerFinancesGoals);
-app.use("/", routerFinancesExpense);
-app.use("/", routerFinancesEntraces);
-app.use("/", routerFinancesResume);
+app.use("/", routerTrip);
+app.use("/", routerFinances);
 app.use("/", routerLogin);
 app.use("/", routerCities);
-app.use("/", routerToDolistMain);
-app.use("/", routerToDolistTasks);
-app.use("/", routerToDolistComments);
-app.use("/", routerToDolistAttchaments);
+app.use("/", routerToDolist);
 
 connection
     .authenticate()

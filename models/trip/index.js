@@ -1,16 +1,15 @@
-const Sequelize = require('sequelize');
-const connection = require('../../database/db');
-const usersModel = require('./../users');
+const Sequelize = require("sequelize");
+const connection = require("../../database/db");
+const usersModel = require("./../users");
 
-const trip = connection.define('trip', {
-
+const trip = connection.define("trip", {
     currentCity: {
         type: Sequelize.TEXT,
         allowNull: false
     },
     currentState: {
         type: Sequelize.TEXT,
-        allowNull: false
+        allowNull: true
     },
     currentCountry: {
         type: Sequelize.TEXT,
@@ -61,10 +60,9 @@ const trip = connection.define('trip', {
         type: Sequelize.INTEGER,
         allowNull: false
     }
-
 });
 
-trip.belongsTo(usersModel)
+trip.belongsTo(usersModel);
 //trip.sync({ force: true });
 
 module.exports = trip;

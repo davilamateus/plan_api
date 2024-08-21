@@ -1,10 +1,8 @@
-const Sequelize = require('sequelize');
-const connection = require('../../../database/db');
-const usersModel = require('../../users');
+const Sequelize = require("sequelize");
+const connection = require("../../../database/db");
+const usersModel = require("../../users");
 
-const financesEntraces = connection.define('financesEntraces', {
-
-
+const financesEntraces = connection.define("financesEntraces", {
     title: {
         type: Sequelize.STRING,
         allowNull: false
@@ -21,11 +19,10 @@ const financesEntraces = connection.define('financesEntraces', {
         type: Sequelize.INTEGER,
         allowNull: false
     }
-
 });
 
 financesEntraces.belongsTo(usersModel);
-usersModel.hasMany(financesEntraces)
+usersModel.hasMany(financesEntraces);
 //financesEntraces.sync({ force: true });
 
 module.exports = financesEntraces;

@@ -2,6 +2,7 @@ const modelUser = require("./../../../models/users");
 const { useCreateConfirmEmail } = require("../../../hooks/confirmEmail/useCreateConfirmEmail");
 const { isEmail } = require("../../../functions/isEmail");
 const { isAValidePassword } = require("../../../functions/isAValidePassword");
+const firstToDoList = require("./../../../functions/firstsToDoList");
 const bcrypt = require("bcryptjs");
 
 const addNewUser = (req, res) => {
@@ -34,6 +35,7 @@ const addNewUser = (req, res) => {
                         })
                         .then((data) => {
                             useCreateConfirmEmail(data.id, email);
+                            firstToDoList(data.id);
                             res.status(200).json({ result: "Add" });
                         });
                 }
