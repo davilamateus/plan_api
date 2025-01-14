@@ -7,10 +7,13 @@ const cors = require("cors");
 app.use(cors());
 
 app.use((req, res, next) => {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-    next();
+	res.header("Access-Control-Allow-Origin", "*");
+	res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
+	res.header(
+		"Access-Control-Allow-Headers",
+		"Origin, X-Requested-With, Content-Type, Accept"
+	);
+	next();
 });
 
 // Import Controllers
@@ -33,15 +36,20 @@ app.use("/", routerLogin);
 app.use("/", routerCities);
 app.use("/", routerToDolist);
 
+app.get("/ping", (req, res) => {
+	console.log("Ping running");
+	res.send("Ping running");
+});
+
 connection
-    .authenticate()
-    .then(() => {
-        console.log("Database Connected");
-    })
-    .catch((error) => {
-        console.log(error);
-    });
+	.authenticate()
+	.then(() => {
+		console.log("Database Connected");
+	})
+	.catch((error) => {
+		console.log(error);
+	});
 
 app.listen(process.env.PORT || 3000, () => {
-    console.log("Server Running");
+	console.log("Server Running");
 });
